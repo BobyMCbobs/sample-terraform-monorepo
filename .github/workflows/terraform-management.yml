@@ -9,3 +9,5 @@ permissions:
 jobs:
   terraform:
     uses: BobyMCbobs/sample-terraform-monorepo/.github/workflows/reusable-terraform-management.yml@main
+    with:
+      terraformCloudApiToken: ${{ secrets.TF_API_TOKEN }}

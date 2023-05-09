@@ -2,6 +2,10 @@ name: terraform-management
 on:
   push: {}
   pull_request: {}
+
+permissions:
+  pull-requests: write
+
 jobs:
   terraform:
     uses: BobyMCbobs/sample-terraform-monorepo/.github/workflows/reusable-terraform-management.yml@main

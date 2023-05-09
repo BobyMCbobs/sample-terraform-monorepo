@@ -2,17 +2,19 @@ name: Terraform management
 on:
   workflow_call:
     inputs:
-      terraformCloudApiToken:
-        type: string
-        required: true
-        description: |
-          the API key for Terraform Cloud
       allowApply:
         type: boolean
         default: false
         required: false
         description: |
           when this is set to true, it will use `terraform apply -auto-approve` to apply without prompt when on main.
+    secrets:
+      TF_API_TOKEN:
+        type: string
+        required: true
+        description: |
+          the API key for Terraform Cloud
+
 jobs:
   terraform:
     name: Terraform
@@ -22,16 +24,16 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
       - id: is-token-empty
         env:
-          TF_API_TOKEN: ${{ inputs.terraformCloudApiToken }}
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
         run: |
           [ -n "$TF_API_TOKEN" ] ; echo $?
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2.0.3
         with:
-          cli_config_credentials_token: ${{ inputs.terraformCloudApiToken }}
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - id: token-in-terraformrc
         env:
-          TF_API_TOKEN: ${{ inputs.terraformCloudApiToken }}
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
         run: |
           grep -q "$TF_API_TOKEN" $HOME/.terraformrc ; echo $?
       - name: Terraform Format

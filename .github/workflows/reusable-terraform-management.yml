@@ -10,10 +10,7 @@ on:
           when this is set to true, it will use `terraform apply -auto-approve` to apply without prompt when on main.
     secrets:
       TF_API_TOKEN:
-        type: string
         required: true
-        description: |
-          the API key for Terraform Cloud
 
 jobs:
   terraform:

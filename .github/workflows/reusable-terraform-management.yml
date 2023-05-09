@@ -8,9 +8,7 @@ on:
         required: false
         description: |
           when this is set to true, it will use `terraform apply -auto-approve` to apply without prompt when on main.
-    secrets:
-      TF_API_TOKEN:
-        required: true
+    secrets: inherit
 
 jobs:
   tflint:
